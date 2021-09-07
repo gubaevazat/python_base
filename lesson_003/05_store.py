@@ -2,6 +2,7 @@
 
 # Есть словарь кодов товаров
 
+
 goods = {
     'Лампа': '12345',
     'Стол': '23456',
@@ -46,10 +47,17 @@ store = {
 #         подсчет стоимости товара
 #     вывод на консоль количества и стоимости товара на складе
 
-# TODO здесь ваш код
 
+goods_store = {}
+for type_of_goods, goods_code in goods.items():
+    goods_store[type_of_goods] = {}
+    goods_store[type_of_goods]['quantity'] = 0
+    goods_store[type_of_goods]['price'] = 0
+    for product in store[goods_code]:
+        goods_store[type_of_goods]['quantity'] += product['quantity']
+        goods_store[type_of_goods]['price'] += product['price'] * product['quantity']
 
-
-
+for type_of_goods, product in goods_store.items():
+    print(type_of_goods, ' - ', product['quantity'], ' шт, стоимость ', product['price'], ' руб')
 
 
