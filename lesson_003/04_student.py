@@ -11,4 +11,9 @@
 
 educational_grant, expenses = 10000, 12000
 
-# TODO здесь ваш код
+
+parents_money = expenses - educational_grant
+for _ in range(9):
+    expenses += expenses * 0.03
+    parents_money += expenses - educational_grant
+print(parents_money)
