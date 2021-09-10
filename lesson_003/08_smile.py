@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # (определение функций)
-import simple_draw
+import simple_draw as sd
 
 # Написать функцию отрисовки смайлика в произвольной точке экрана
 # Форма рожицы-смайлика на ваше усмотрение
@@ -10,4 +10,13 @@ import simple_draw
 
 # TODO здесь ваш код
 
-simple_draw.pause()
+
+def smile(x, y, color):
+    sd.circle(sd.get_point(x, y), 100, color=color, width=3)
+    sd.circle(sd.get_point(x - 40, y + 25), 10, color=color)
+    sd.circle(sd.get_point(x + 40, y + 25), 10, color=color)
+
+
+smile(300, 300, sd.COLOR_YELLOW)
+
+sd.pause()
