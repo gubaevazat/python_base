@@ -16,4 +16,34 @@ import simple_draw as sd
 
 # TODO здесь ваш код
 
+
+def figure_draw(point, angle, length, n):
+    for _ in range(n):
+        vector = sd.get_vector(point, angle, length)
+        vector.draw(width=2)
+        angle += 360 / n
+        point = vector.end_point
+
+
+def triangle(point, angle=0, length=100):
+    figure_draw(point, angle, length, 3)
+
+
+def square(point, angle=0, length=100):
+    figure_draw(point, angle, length, 4)
+
+
+def pentagon(point, angle=0, length=100):
+    figure_draw(point, angle, length, 5)
+
+
+def hexagon(point, angle=0, length=100):
+    figure_draw(point, angle, length, 6)
+
+
+
+hexagon(sd.get_point(100, 100))
+triangle(sd.get_point(400, 450))
+square(sd.get_point(400, 100))
+pentagon(sd.get_point(100, 400))
 sd.pause()
