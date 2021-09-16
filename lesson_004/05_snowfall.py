@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import random
 
 import simple_draw as sd
 
@@ -10,6 +11,7 @@ import simple_draw as sd
 
 N = 20
 
+
 # Пригодятся функции
 # sd.get_point()
 # sd.snowflake()
@@ -17,13 +19,39 @@ N = 20
 # sd.random_number()
 # sd.user_want_exit()
 
-# TODO здесь ваш код
+
+sd.resolution = (1200, 600)
+y = 500
+
+snowflakes = []
+
 while True:
-    sd.clear_screen()
-    pass
-    pass
-    pass
-    sd.sleep(0.1)
+    snowflakes.append({'x': random.randint(0, 1200), 'y': y, 'length': random.randint(10, 50)})
+
+    sd.start_drawing()
+    for snowflake in snowflakes:
+        point = sd.get_point(snowflake['x'], snowflake['y'])
+        sd.snowflake(center=point, length=snowflake['length'], color=sd.COLOR_WHITE)
+    sd.finish_drawing()
+    sd.sleep(0.2)
+
+    sd.start_drawing()
+    new_snowflakes = []
+    old_snowflakes = []
+    for snowflake in snowflakes:
+        point = sd.get_point(snowflake['x'], snowflake['y'])
+        sd.snowflake(center=point, length=snowflake['length'], color=sd.background_color)
+        snowflake['x'] += random.randint(-10, 20)
+        snowflake['y'] -= 10
+        if snowflake['y'] > 40:
+            new_snowflakes.append(snowflake)
+        else:
+            old_snowflakes.append(snowflake)
+    for snowflake in old_snowflakes:
+        point = sd.get_point(snowflake['x'], snowflake['y'])
+        sd.snowflake(center=point, length=snowflake['length'], color=sd.COLOR_WHITE)
+    sd.finish_drawing()
+    snowflakes = new_snowflakes
     if sd.user_want_exit():
         break
 
