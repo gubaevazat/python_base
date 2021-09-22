@@ -15,4 +15,10 @@
 # Создать рецепт своего бургера, по вашему вкусу.
 # Если не хватает инградиентов - создать соответствующие функции в модуле my_burger
 
-# TODO здесь ваш код
+
+import my_burger
+my_burger.add_cutlet()
+my_burger.add_bun()
+my_burger.add_cucumber()
+my_burger.add_cheese()
+my_burger.add_tomato()
