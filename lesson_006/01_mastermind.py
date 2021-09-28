@@ -43,4 +43,16 @@
 # Это пример применения SOLID принципа (см https://goo.gl/GFMoaI) в архитектуре программ.
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
-# TODO здесь ваш код...
+
+from mastermind_engine import make_number, check_user_number, check_number, is_gameover
+make_number()
+while True:
+    user_number = input('Введите число: ')
+    if not check_number(user_number):
+        print('Число должно быть из четырех цифр и не повторяться!')
+        continue
+    if is_gameover(user_number):
+        print('Поздравляем игра окончена, вы угадали число!')
+        break
+    print(check_user_number(user_number))
+
