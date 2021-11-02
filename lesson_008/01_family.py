@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import random
 
 from termcolor import cprint
 from random import randint
@@ -44,53 +45,122 @@ from random import randint
 
 class House:
 
-    def __init__(self):
-        pass
-
-
-class Husband:
-
-    def __init__(self):
-        pass
+    money = 100
+    eat = 50
+    dirt = 0
+    all_money = 0
+    all_eat = 0
+    all_coat = 0
 
     def __str__(self):
-        return super().__str__()
+        return 'В доме денег - {}, еды - {}, грязи - {}'\
+            .format(House.money, House.eat, House.dirt)
 
-    def act(self):
-        pass
+
+class Human:
+
+    def __init__(self):
+        self.fullness = 30
+        self.happiness = 100
 
     def eat(self):
-        pass
+        amount_of_food = random.randint(10, 30)
+        self.fullness += amount_of_food
+        House.eat -= amount_of_food
+        House.all_eat += amount_of_food
+
+    def __str__(self):
+        return 'сытость - {}, счастье - {}'.format(self.fullness, self.happiness)
+
+    def act(self):
+        if House.dirt > 90:
+            self.happiness -= 10
+        if self.fullness < 0:
+            return 'умер от голода'
+        elif self.happiness < 10:
+            return 'умер от депрессии'
+
+
+class Husband(Human):
+
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+
+    def __str__(self):
+        return '{} '.format(self.name) + super().__str__()
+
+    def eat(self):
+        super().eat()
+        print('{} поел(а)'.format(self.name))
 
     def work(self):
-        pass
+        House.money += 150
+        House.all_money += 150
+        self.fullness -= 10
+        print('{} поработал'.format(self.name))
 
     def gaming(self):
-        pass
-
-
-class Wife:
-
-    def __init__(self):
-        pass
-
-    def __str__(self):
-        return super().__str__()
+        self.happiness += 20
+        self.fullness -= 10
+        print('{} поиграл в WoT, хорошо))'.format(self.name))
 
     def act(self):
-        pass
+
+        # self.happiness -= 50
+        if self.fullness <= 10:
+            self.eat()
+        elif self.happiness <= 10:
+            self.gaming()
+        elif House.money <= 400:
+            self.work()
+        if super().act() is not None:
+            print('{} '.format(self.name) + super().act())
+
+
+class Wife(Human):
+
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+
+    def __str__(self):
+        return '{} '.format(self.name) + super().__str__()
 
     def eat(self):
-        pass
+        super().eat()
+        print('{} поел(а)'.format(self.name))
 
     def shopping(self):
-        pass
+        House.eat += 50
+        House.money -= 50
+        self.fullness -= 10
+        print('{} купила продукты'.format(self.name))
 
     def buy_fur_coat(self):
-        pass
+        House.money -= 350
+        self.happiness += 60
+        self.fullness -= 10
+        House.all_coat += 1
+        print('{} купила шубу, я счастлива!!!'.format(self.name))
 
     def clean_house(self):
-        pass
+        House.dirt -= 100
+        self.fullness -= 10
+        print('{} убралась в доме'.format(self.name))
+
+    def act(self):
+        if super().act() is not None:
+            print('{} '.format(self.name) + super().act())
+        # self.fullness -= 5
+        if self.fullness <= 10:
+            self.eat()
+        elif self.happiness <= 10:
+            self.buy_fur_coat()
+        elif House.eat <= 30:
+            self.shopping()
+        elif House.dirt >= 100:
+            self.clean_house()
 
 
 home = House()
@@ -104,7 +174,10 @@ for day in range(365):
     cprint(serge, color='cyan')
     cprint(masha, color='cyan')
     cprint(home, color='cyan')
+    House.dirt += 5
 
+print('{} - заработано, {} - съедено, {} - шуб куплено'
+      .format(House.all_money, House.all_eat, House.all_coat))
 # TODO после реализации первой части - отдать на проверку учителю
 
 ######################################################## Часть вторая
@@ -189,23 +262,23 @@ class Child:
 # отправить на проверку учителем.
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-kolya = Child(name='Коля')
-murzik = Cat(name='Мурзик')
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    serge.act()
-    masha.act()
-    kolya.act()
-    murzik.act()
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(kolya, color='cyan')
-    cprint(murzik, color='cyan')
-
+# home = House()
+# serge = Husband(name='Сережа')
+# masha = Wife(name='Маша')
+# kolya = Child(name='Коля')
+# murzik = Cat(name='Мурзик')
+#
+# for day in range(365):
+#     cprint('================== День {} =================='.format(day), color='red')
+#     serge.act()
+#     masha.act()
+#     kolya.act()
+#     murzik.act()
+#     cprint(serge, color='cyan')
+#     cprint(masha, color='cyan')
+#     cprint(kolya, color='cyan')
+#     cprint(murzik, color='cyan')
+#
 
 # Усложненное задание (делать по желанию)
 #
