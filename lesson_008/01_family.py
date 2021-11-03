@@ -48,6 +48,7 @@ class House:
     money = 100
     eat = 50
     dirt = 0
+    eat_for_cat = 30
     all_money = 0
     all_eat = 0
     all_coat = 0
@@ -207,20 +208,26 @@ print('{} - заработано, {} - съедено, {} - шуб куплен�
 
 class Cat:
 
-    def __init__(self):
-        pass
-
-    def act(self):
-        pass
+    def __init__(self, name):
+        self.fullness = 30
+        self.name = name
 
     def eat(self):
-        pass
+        amount_of_food = random.randint(5, 10)
+        self.fullness += amount_of_food * 2
 
     def sleep(self):
-        pass
+        print('{} спит'.format(self.name))
+        self.fullness -= 10
 
     def soil(self):
-        pass
+        print('{} дерет обои'.format(self.name))
+        House.dirt += 5
+        self.fullness -= 10
+
+    def act(self):
+        if self.fullness <= 5:
+            self.eat()
 
 
 ######################################################## Часть вторая бис
@@ -236,8 +243,8 @@ class Cat:
 
 class Child:
 
-    def __init__(self):
-        pass
+    def __init__(self, name):
+       pass
 
     def __str__(self):
         return super().__str__()
