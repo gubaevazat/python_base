@@ -70,6 +70,10 @@ class Human:
         House.eat -= amount_of_food
         House.all_eat += amount_of_food
 
+    def petting_cat(self):
+        self.happiness += 5
+        return 'гладит кота'
+
     def __str__(self):
         return 'сытость - {}, счастье - {}'.format(self.fullness, self.happiness)
 
@@ -115,6 +119,8 @@ class Husband(Human):
             self.gaming()
         elif House.money <= 400:
             self.work()
+        elif random.randint(0, 4) == 4:
+            self.petting_cat()
         if super().act() is not None:
             print('{} '.format(self.name) + super().act())
 
@@ -138,6 +144,12 @@ class Wife(Human):
         self.fullness -= 10
         print('{} купила продукты'.format(self.name))
 
+    def buy_eat_cat(self):
+        House.eat_for_cat += 10
+        House.money -= 10
+        self.fullness -= 10
+        print('{} купила еду коту'.format(self.name))
+
     def buy_fur_coat(self):
         House.money -= 350
         self.happiness += 60
@@ -160,25 +172,29 @@ class Wife(Human):
             self.buy_fur_coat()
         elif House.eat <= 30:
             self.shopping()
+        elif House.eat_for_cat <= 5:
+            self.buy_eat_cat()
         elif House.dirt >= 100:
             self.clean_house()
+        elif random.randint(0, 4) == 4:
+            self.petting_cat()
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    serge.act()
-    masha.act()
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(home, color='cyan')
-    House.dirt += 5
-
-print('{} - заработано, {} - съедено, {} - шуб куплено'
-      .format(House.all_money, House.all_eat, House.all_coat))
+# home = House()
+# serge = Husband(name='Сережа')
+# masha = Wife(name='Маша')
+#
+# for day in range(365):
+#     cprint('================== День {} =================='.format(day), color='red')
+#     serge.act()
+#     masha.act()
+#     cprint(serge, color='cyan')
+#     cprint(masha, color='cyan')
+#     cprint(home, color='cyan')
+#     House.dirt += 5
+#
+# print('{} - заработано, {} - съедено, {} - шуб куплено'
+#       .format(House.all_money, House.all_eat, House.all_coat))
 # TODO после реализации первой части - отдать на проверку учителю
 
 ######################################################## Часть вторая
@@ -215,6 +231,7 @@ class Cat:
     def eat(self):
         amount_of_food = random.randint(5, 10)
         self.fullness += amount_of_food * 2
+        House.eat_for_cat -= amount_of_food
 
     def sleep(self):
         print('{} спит'.format(self.name))
@@ -225,9 +242,18 @@ class Cat:
         House.dirt += 5
         self.fullness -= 10
 
+    def __str__(self):
+        return '{}, сытость - {}'.format(self.name, self.fullness)
+
     def act(self):
-        if self.fullness <= 5:
+        if self.fullness < 0:
+            print('{} - умер от голода'.format(self.name))
+        if self.fullness <= 10:
             self.eat()
+        elif random.randint(0, 1):
+            self.sleep()
+        else:
+            self.soil()
 
 
 ######################################################## Часть вторая бис
@@ -244,7 +270,7 @@ class Cat:
 class Child:
 
     def __init__(self, name):
-       pass
+        pass
 
     def __str__(self):
         return super().__str__()
@@ -269,23 +295,25 @@ class Child:
 # отправить на проверку учителем.
 
 
-# home = House()
-# serge = Husband(name='Сережа')
-# masha = Wife(name='Маша')
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
 # kolya = Child(name='Коля')
-# murzik = Cat(name='Мурзик')
-#
-# for day in range(365):
-#     cprint('================== День {} =================='.format(day), color='red')
-#     serge.act()
-#     masha.act()
-#     kolya.act()
-#     murzik.act()
-#     cprint(serge, color='cyan')
-#     cprint(masha, color='cyan')
-#     cprint(kolya, color='cyan')
-#     cprint(murzik, color='cyan')
-#
+murzik = Cat(name='Мурзик')
+
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    serge.act()
+    masha.act()
+    # kolya.act()
+    murzik.act()
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    # cprint(kolya, color='cyan')
+    cprint(murzik, color='cyan')
+
+print('{} - заработано, {} - съедено, {} - шуб куплено'
+      .format(House.all_money, House.all_eat, House.all_coat))
 
 # Усложненное задание (делать по желанию)
 #
