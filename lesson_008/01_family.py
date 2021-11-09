@@ -179,26 +179,6 @@ class Wife(Human):
         elif random.randint(0, 4) == 4:
             self.petting_cat()
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-
-# home = House()
-# serge = Husband(name='Сережа')
-# masha = Wife(name='Маша')
-#
-# for day in range(365):
-#     cprint('================== День {} =================='.format(day), color='red')
-#     serge.act()
-#     masha.act()
-#     cprint(serge, color='cyan')
-#     cprint(masha, color='cyan')
-#     cprint(home, color='cyan')
-#     House.dirt += 5
-#
-# print('{} - заработано, {} - съедено, {} - шуб куплено'
-#       .format(House.all_money, House.all_eat, House.all_coat))
-# TODO после реализации первой части - отдать на проверку учителю
 
 ######################################################## Часть вторая
 #
@@ -297,32 +277,22 @@ class Child(Human):
             self.sleep()
 
 
-# TODO после реализации второй части - отдать на проверку учителем две ветки
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+kolya = Child(name='Коля')
+murzik = Cat(name='Мурзик')
 
-
-######################################################## Часть третья
-#
-# после подтверждения учителем второй части (обоих веток)
-# влить в мастер все коммиты из ветки develop и разрешить все конфликты
-# отправить на проверку учителем.
-
-
-# home = House()
-# serge = Husband(name='Сережа')
-# masha = Wife(name='Маша')
-# kolya = Child(name='Коля')
-# murzik = Cat(name='Мурзик')
-#
-# for day in range(365):
-#     cprint('================== День {} =================='.format(day), color='red')
-#     serge.act()
-#     masha.act()
-#     kolya.act()
-#     murzik.act()
-#     cprint(serge, color='cyan')
-#     cprint(masha, color='cyan')
-#     cprint(kolya, color='cyan')
-#     cprint(murzik, color='cyan')
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    serge.act()
+    masha.act()
+    kolya.act()
+    murzik.act()
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(kolya, color='cyan')
+    cprint(murzik, color='cyan')
 #
 
 # Усложненное задание (делать по желанию)
