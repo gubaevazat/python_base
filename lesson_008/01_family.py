@@ -179,6 +179,9 @@ class Wife(Human):
         elif random.randint(0, 4) == 4:
             self.petting_cat()
 
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
 
 # home = House()
 # serge = Husband(name='Сережа')
@@ -267,22 +270,31 @@ class Cat:
 # отличия от взрослых - кушает максимум 10 единиц еды,
 # степень счастья  - не меняется, всегда ==100 ;)
 
-class Child:
+class Child(Human):
 
     def __init__(self, name):
-        pass
+        super().__init__()
+        self.name = name
 
     def __str__(self):
-        return super().__str__()
-
-    def act(self):
-        pass
+        return '{} '.format(self.name) + super().__str__()
 
     def eat(self):
-        pass
+        amount_of_food = random.randint(5, 10)
+        self.fullness += amount_of_food
+        House.eat -= amount_of_food
 
     def sleep(self):
-        pass
+        print('{} - поспал'.format(self.name))
+        self.fullness -= 5
+
+    def act(self):
+        if super().act() is not None:
+            print('{} '.format(self.name) + super().act())
+        if self.fullness <= 5:
+            self.eat()
+        else:
+            self.sleep()
 
 
 # TODO после реализации второй части - отдать на проверку учителем две ветки
@@ -295,25 +307,23 @@ class Child:
 # отправить на проверку учителем.
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
+# home = House()
+# serge = Husband(name='Сережа')
+# masha = Wife(name='Маша')
 # kolya = Child(name='Коля')
-murzik = Cat(name='Мурзик')
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    serge.act()
-    masha.act()
-    # kolya.act()
-    murzik.act()
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    # cprint(kolya, color='cyan')
-    cprint(murzik, color='cyan')
-
-print('{} - заработано, {} - съедено, {} - шуб куплено'
-      .format(House.all_money, House.all_eat, House.all_coat))
+# murzik = Cat(name='Мурзик')
+#
+# for day in range(365):
+#     cprint('================== День {} =================='.format(day), color='red')
+#     serge.act()
+#     masha.act()
+#     kolya.act()
+#     murzik.act()
+#     cprint(serge, color='cyan')
+#     cprint(masha, color='cyan')
+#     cprint(kolya, color='cyan')
+#     cprint(murzik, color='cyan')
+#
 
 # Усложненное задание (делать по желанию)
 #
