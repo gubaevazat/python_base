@@ -23,3 +23,34 @@
 # Вызов метода обернуть в try-except.
 
 # TODO здесь ваш код
+
+class NotNameError(Exception):
+
+    def __init__(self, message='Поле имени должно содержать только буквы!'):
+        self.message = message
+        super().__init__(self.message)
+
+
+class NotMailError(Exception):
+
+    def __init__(self, message='Email не содержит @ или .'):
+        self.message = message
+        super().__init__(self.message)
+
+
+with open('registrations.txt', 'r', encoding='utf8') as registration_file, \
+     open('registrations_good.log', 'w', encoding='utf8') as registration_good, \
+     open('registration_bad.log', 'w', encoding='utf8') as registration_bad:
+    for line_number, line in enumerate(registration_file):
+        try:
+            name, email, age = line.split()
+            if not name.isalpha():
+                raise NotNameError
+            if not ('@' in email) and ('.' in email):
+                raise NotMailError
+            if 99 < int(age) < 10:
+                raise ValueError('Возраст меньше десяти или больше 99!')
+            registration_good.write(line)
+        except (ValueError, NotNameError, NotMailError) as exc:
+            registration_bad.write(line)
+            registration_bad.write(str(exc) + '\n')
